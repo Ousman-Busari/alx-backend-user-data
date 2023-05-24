@@ -1,2 +1,2 @@
-ALX Back-end Specialization\
-Authentication\
+### ALX Back-end Specialization
+Authentication
