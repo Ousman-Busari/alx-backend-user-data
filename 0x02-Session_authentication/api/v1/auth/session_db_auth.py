@@ -27,9 +27,9 @@ class SessionDBAuth(SessionExpAuth):
         if not users_sessions or len(users_sessions) == 0:
             return None
         user_session = users_sessions[0]
-        # session_created_at = user_session.created_at
-        session_created_at = self.user_id_by_session_id[session_id]
-        session_created_at = session_created_at['created_at']
+        session_created_at = user_session.created_at
+        # session_created_at = self.user_id_by_session_id[session_id]
+        # session_created_at = session_created_at['created_at']
         print(session_created_at)
         expired_time = session_created_at + timedelta(
                 seconds=self.session_duration)
