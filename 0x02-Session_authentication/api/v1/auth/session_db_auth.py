@@ -9,6 +9,7 @@ from models.user_session import UserSession
 
 class SessionDBAuth(SessionExpAuth):
     """database session authentication"""
+
     def create_session(self, user_id: str = None):
         """creates a session"""
         session_id = super().create_session(user_id)
@@ -18,19 +19,18 @@ class SessionDBAuth(SessionExpAuth):
         user_session.save()
         return session_id
 
-    def user_id_for_session_id(self, session_id: str = None):
+    def user_id_for_session_id(self, session_id: str = None) -> str:
         """gets a user id from a session id"""
         if session_id is None or not isinstance(session_id, str):
             return None
         UserSession.load_from_file()
         users_sessions = UserSession.search({'session_id': session_id})
-        if not users_sessions or len(users_sessions) == 0:
+        if len(users_sessions) == 0:
             return None
         user_session = users_sessions[0]
         session_created_at = user_session.created_at
         expired_time = session_created_at + timedelta(
-                seconds=self.session_duration)
-        print(expired_time, " ttt")
+            seconds=self.session_duration)
         if expired_time < datetime.now():
             return None
         return user_session.user_id
